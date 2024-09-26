@@ -1,65 +1,23 @@
-class DynamicArray:
-    def __init__(self):
-        self.array = []
-    
-    def append(self, value):
-        self.array.append(value)      
-    
-    def insert(self, index, value):
-        if 0 <= index <= len(self.array):
-            self.array.insert(index, value)
+
+class Thermostat:
+    def __init__(self, desired_temp):
+        self.desired_temp = desired_temp
+
+    def check_temperature(self, current_temp):
+        if current_temp < self.desired_temp:
+            return "Turn On the Heater"
+        elif current_temp > self.desired_temp:
+            return "Turn On the Air Conditioner"
         else:
-            print("Index out of bounds.")
-    
-    def remove(self, value):
-        if value in self.array:
-            self.array.remove(value)
-        else:
-            print("Value not found in the array.")
-    
-    def display(self):
-        print("Current array contents:")
-        for item in self.array:    
-            print(item)
+            return "Temperature is Fine"
 
+agent = Thermostat(22)
+rooms = {
+    "living room": 27,
+    "bedroom": 20,
+    "kitchen": 30
+}
 
-def menu():
-    array = DynamicArray()
-
-    def agent1():
-        value = input("Enter the value to append:")
-        array.append(value)
-    def agent2():
-        index = int(input("Enter the index to insert: "))
-        value = input("Enter the value to insert: ")
-        array.insert(index, value)
-    def agent3():
-        value = input("Enter the value toremove: ")
-        array.remove(value)
-    def agent4():
-        array.display()
-
-    while True:
-        print("\nDynamic Array Menu:")
-        print("1. Apend value ")
-        print("2. Insert value ")
-        print("3. Remove value ")
-        print("4. Display arry")
-        print("5.quit")
-        
-        choice = input("Enter your choice (1-5): ")
-        if choice == '1':
-            agent1()
-        elif choice == '2':
-            agent2()
-        elif choice == '3':
-            agent3()
-        elif choice == '4':
-            agent4()
-        elif choice == '5':
-            print("Quiting Program....")
-            break
-        else:
-            print("Invalid choice..")
-
-menu()
+for room,temp in rooms.items():
+    action = agent.check_temperature(temp)
+    print(f"{room}: {temp} --> {action}")
